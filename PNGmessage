@@ -1,3 +1,5 @@
+#This program takes a PNG image input and embeds a hidden message as well as decode.
+
 from PIL import Image
 
 def convertToBinary(data):
@@ -76,7 +78,8 @@ def decrypt():
     img = Image.open(image)
     img_data = iter(dataGet(img))
     msg = ''
-    for i in range(100):
+    cont = True
+    while cont == True:
         pixel = [p for p in next(img_data) + next(img_data)]
         bin_temp = ''
         for j in range(8):
@@ -86,6 +89,8 @@ def decrypt():
                 bin_temp += '1'
         msg += chr(int(bin_temp, 2))
         index = msg.find('endmsg')
+        if index > 0:
+            cont = False
     print('Decoded message: ', msg[:index])
 
 def main():
